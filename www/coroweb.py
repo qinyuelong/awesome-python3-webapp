@@ -12,8 +12,6 @@ from apis import APIError
 def get(path):
     '''
     Define decorator %get('/path')
-    :param path:
-    :return:
     '''
 
     def decorator(func):
@@ -37,7 +35,7 @@ def post(path):
         def wrapper(*args, **kw):
             return func(*args, **kw)
         wrapper.__method__ = 'POST'
-        wrapper.__route = path
+        wrapper.__route__ = path
         return wrapper
     return decorator
 
@@ -48,7 +46,7 @@ def get_required_kw_args(fn):
     for name,param in params.items():
         if param.kind == inspect.Parameter.KEYWORD_ONLY and param.default == inspect.Parameter.empty:
             args.append(name)
-        return tuple(args)
+    return tuple(args)
 
 
 
@@ -88,7 +86,7 @@ def has_request_arg(fn):
             continue
         if found and (param.kind != inspect.Parameter.VAR_POSITIONAL and param.kind != inspect.Parameter.KEYWORD_ONLY and param.kind != inspect.Parameter.VAR_KEYWORD):
             raise ValueError('request parameter must be the last name parameter in function: %s%s' % (fn.__name__, str(sig)))
-        return found
+    return found
 
 
 
