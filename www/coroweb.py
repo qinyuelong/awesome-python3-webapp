@@ -7,12 +7,14 @@ __author__ = 'qin'
 import asyncio, os, inspect, logging, functools
 from urllib import parse
 from aiohttp import web
-# from apis import APIError
+from apis import APIError
 
 def get(path):
-    ```
+    '''
     Define decorator %get('/path')
-    ```
+    :param path:
+    :return:
+    '''
 
     def decorator(func):
         @functools.wraps(func)
@@ -24,10 +26,12 @@ def get(path):
     return decorator
 
 
-def post(path)
-    ```
+def post(path):
+    '''
     Define decorator @post('/path')
-    ```
+    :param path: 
+    :return: 
+    '''
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kw):
@@ -140,7 +144,7 @@ class RequestHandler(object):
                         logging.warning('Duplicate arg name in named arg and kw args: %s' % k)
                         kw[k] = v
             if self._has_request_arg:
-                ke['request'] = request
+                kw['request'] = request
             # check required kw:
             if self._required_kw_args:
                 for name in self._required_kw_args:
@@ -165,7 +169,7 @@ def add_static(app):
 def add_route(app, fn):
     method = getattr(fn, '__method__', None)
     path = getattr(fn, '__route__', None)
-    if path.is None or method is None:
+    if path is None or method is None:
         raise ValueError('@get or @post not defined in %s.' % str(fn))
     if not asyncio.iscoroutinefunction(fn) and not inspect.isgeneratorfunction(fn):
         fn = asyncio.coroutine(fn)
