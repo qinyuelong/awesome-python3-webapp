@@ -25,7 +25,7 @@ import asyncio
 async def test(loop):
     await orm.create_pool(loop = loop, user='root', password='password', db='awesome')
 
-    u = User(name='Test中文', email='test333@example.com', password='1234567890', image='about:blank')
+    u = User(name='Test2222', email='tes4444@example.com', password='1234567890', image='about:blank')
 
     await u.save()
     # await orm.destory_pool()
